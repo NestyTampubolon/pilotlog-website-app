@@ -46,10 +46,19 @@ export function SidebarLinks(props) {
             {createLinks(route.items)}
           </>
         );
-      } else if (
-        route.layout === "/admin" ||
-        route.layout === "/auth" ||
-        route.layout === "/rtl"
+      } else if (  
+        route.path === "/default" || 
+        route.path === "/users" ||
+        route.path === "/attendance" ||
+        route.path === "/trainingclass" ||
+        route.path === "/certificate" ||
+        route.path === "/statements" ||
+        route.path === "/company" 
+        // ||
+        // route.path === "/nft-marketplace" ||
+        // route.path === "/data-tables" ||
+        // route.path === "/profile" ||
+        // route.path === "/rtl-default"
       ) {
         return (
           <NavLink key={index} to={route.layout + route.path}>

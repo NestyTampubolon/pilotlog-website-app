@@ -26,7 +26,7 @@ export default function Footer() {
       justifyContent='space-between'
       px={{ base: "30px", md: "0px" }}
       pb='30px'>
-      <Text
+      {/* <Text
         color={textColor}
         textAlign={{
           base: "center",
@@ -46,8 +46,8 @@ export default function Footer() {
             Simmmple!
           </Link>
         </Text>
-      </Text>
-      <List display='flex'>
+      </Text> */}
+      {/* <List display='flex'>
         <ListItem
           me={{
             base: "20px",
@@ -92,7 +92,7 @@ export default function Footer() {
             Blog
           </Link>
         </ListItem>
-      </List>
+      </List> */}
     </Flex>
   );
 }

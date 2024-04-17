@@ -20,8 +20,13 @@ export default function MiniCalendar(props) {
       p='20px 15px'
       h='max-content'
       {...rest}>
+      <Text>Date: {value.toDateString()}</Text> 
       <Calendar
-        onChange={onChange}
+        onChange={(date) => {
+          onChange(date);
+          selectRange && selectRange(date);
+          props.onChange && props.onChange(date);
+        }}
         value={value}
         selectRange={selectRange}
         view={"month"}

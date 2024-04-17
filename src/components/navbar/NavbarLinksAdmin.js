@@ -25,6 +25,9 @@ import { MdNotificationsNone, MdInfoOutline } from 'react-icons/md';
 import { FaEthereum } from 'react-icons/fa';
 import routes from 'routes.js';
 import { ThemeEditor } from './ThemeEditor';
+import { getUsersInfo } from 'axios_helper.js'
+import { useHistory } from 'react-router-dom';
+import { removeAuthToken, removeRefreshToken, removeUsersInfo } from 'axios_helper.js';
 export default function HeaderLinks(props) {
 	const { secondary } = props;
 	// Chakra Color Mode
@@ -41,6 +44,20 @@ export default function HeaderLinks(props) {
 		'14px 17px 40px 4px rgba(112, 144, 176, 0.06)'
 	);
 	const borderButton = useColorModeValue('secondaryGray.500', 'whiteAlpha.200');
+	const history = useHistory();
+	const toProfile = () => {
+		console.log("test");
+		history.push(`/admin/profile/${getUsersInfo() && getUsersInfo().id_users}`);
+	};
+	const onLogout = (e) => {
+		e.preventDefault();
+		removeAuthToken();
+		removeUsersInfo();
+		removeRefreshToken();
+		history.push("/auth/sign-in");
+	};
+
+
 	return (
 		<Flex
 			w={{ sm: '100%', md: 'auto' }}
@@ -49,9 +66,12 @@ export default function HeaderLinks(props) {
 			bg={menuBg}
 			flexWrap={secondary ? { base: 'wrap', md: 'nowrap' } : 'unset'}
 			p="10px"
+			paddingX='30px'
 			borderRadius="30px"
 			boxShadow={shadow}>
-			<SearchBar mb={secondary ? { base: '10px', md: 'unset' } : 'unset'} me="10px" borderRadius="30px" />
+			<Text fontSize="md" fontWeight="600"  color={textColor}>
+				Hey, {getUsersInfo() && getUsersInfo().name} &nbsp;
+			</Text>
 			<Flex
 				bg={ethBg}
 				display={secondary ? 'flex' : 'none'}
@@ -72,7 +92,7 @@ export default function HeaderLinks(props) {
 				</Text>
 			</Flex>
 			<SidebarResponsive routes={routes} />
-			<Menu>
+			{/* <Menu>
 				<MenuButton p="0px">
 					<Icon mt="6px" as={MdNotificationsNone} color={navbarIcon} w="18px" h="18px" me="10px" />
 				</MenuButton>
@@ -162,16 +182,16 @@ export default function HeaderLinks(props) {
             </Link>
           </Flex>
         </MenuList>
-      </Menu>
+      </Menu> 
 
-			<ThemeEditor navbarIcon={navbarIcon} />
+			<ThemeEditor navbarIcon={navbarIcon} /> */}
 
 			<Menu>
 				<MenuButton p="0px">
 					<Avatar
 						_hover={{ cursor: 'pointer' }}
 						color="white"
-						name="Adela Parkson"
+						name={getUsersInfo() && getUsersInfo().name}
 						bg="#11047A"
 						size="sm"
 						w="40px"
@@ -190,17 +210,18 @@ export default function HeaderLinks(props) {
 							fontSize="sm"
 							fontWeight="700"
 							color={textColor}>
-							👋&nbsp; Hey, Adela
+							👋&nbsp; Hey, {getUsersInfo() && getUsersInfo().name}
 						</Text>
 					</Flex>
 					<Flex flexDirection="column" p="10px">
-						<MenuItem _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} borderRadius="8px" px="14px">
+						<MenuItem onClick={toProfile} _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} borderRadius="8px" px="14px">
 							<Text fontSize="sm">Profile Settings</Text>
 						</MenuItem>
 						<MenuItem _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} borderRadius="8px" px="14px">
 							<Text fontSize="sm">Newsletter Settings</Text>
 						</MenuItem>
 						<MenuItem
+							onClick={onLogout}
 							_hover={{ bg: 'none' }}
 							_focus={{ bg: 'none' }}
 							color="red.400"

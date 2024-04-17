@@ -24,7 +24,7 @@ import Card from "components/card/Card";
 import Menu from "components/menu/MainMenu";
 
 // Assets
-import { MdCheckCircle, MdCancel, MdOutlineError } from "react-icons/md";
+import { MdCheckCircle, MdCancel, MdOutlineError, MdDoNotDisturbOn, MdFlaky } from "react-icons/md";
 export default function ColumnsTable(props) {
   const { columnsData, tableData } = props;
 
@@ -65,7 +65,7 @@ export default function ColumnsTable(props) {
           fontSize='22px'
           fontWeight='700'
           lineHeight='100%'>
-          Complex Table
+          Training Table
         </Text>
         <Menu />
       </Flex>
@@ -115,19 +115,31 @@ export default function ColumnsTable(props) {
                             cell.value === "Approved"
                               ? "green.500"
                               : cell.value === "Disable"
-                              ? "red.500"
-                              : cell.value === "Error"
-                              ? "orange.500"
-                              : null
+                                ? "red.500"
+                                : cell.value === "Error"
+                                  ? "orange.500" 
+                                  : cell.value === "Done"
+                                    ? "green.500"
+                                    : cell.value === "Confirmation"
+                                      ? "green.900"
+                                  : cell.value === "Pending"
+                                    ? "orange.500"
+                                    : null
                           }
                           as={
                             cell.value === "Approved"
                               ? MdCheckCircle
                               : cell.value === "Disable"
-                              ? MdCancel
-                              : cell.value === "Error"
-                              ? MdOutlineError
-                              : null
+                                ? MdCancel
+                                : cell.value === "Error"
+                                  ? MdOutlineError 
+                                  : cell.value === "Done"
+                                    ? MdCheckCircle
+                                    : cell.value === "Confirmation"
+                                      ? MdFlaky 
+                                  : cell.value === "Pending"
+                                      ? MdDoNotDisturbOn 
+                                    : null
                           }
                         />
                         <Text color={textColor} fontSize='sm' fontWeight='700'>
@@ -135,25 +147,13 @@ export default function ColumnsTable(props) {
                         </Text>
                       </Flex>
                     );
-                  } else if (cell.column.Header === "DATE") {
+                  } else if (cell.column.Header === "INSTRUCTOR") {
                     data = (
                       <Text color={textColor} fontSize='sm' fontWeight='700'>
                         {cell.value}
                       </Text>
                     );
-                  } else if (cell.column.Header === "PROGRESS") {
-                    data = (
-                      <Flex align='center'>
-                        <Progress
-                          variant='table'
-                          colorScheme='brandScheme'
-                          h='8px'
-                          w='108px'
-                          value={cell.value}
-                        />
-                      </Flex>
-                    );
-                  }
+                  } 
                   return (
                     <Td
                       {...cell.getCellProps()}

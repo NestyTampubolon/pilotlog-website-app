@@ -88,7 +88,7 @@ export const buttonStyles = {
           borderRadius: "50px",
           bg: mode("transparent", "brand.400")(props),
           border: mode("1px solid", "0px solid")(props),
-          borderColor: mode("secondaryGray.400", "transparent")(props),
+          borderColor: mode("brand.400", "transparent")(props),
           color: mode("secondaryGray.900", "white")(props),
           _focus: {
             bg: mode("transparent", "brand.400")(props),

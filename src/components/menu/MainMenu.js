@@ -95,7 +95,7 @@ export default function Banner(props) {
           <Flex align='center'>
             <Icon as={MdOutlinePerson} h='16px' w='16px' me='8px' />
             <Text fontSize='sm' fontWeight='400'>
-              Panel 1
+              This Panel 1
             </Text>
           </Flex>
         </MenuItem>

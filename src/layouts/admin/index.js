@@ -20,7 +20,8 @@ export default function Dashboard(props) {
 		return window.location.pathname !== '/admin/full-screen-maps';
 	};
 	const getActiveRoute = (routes) => {
-		let activeRoute = 'Default Brand Text';
+		let activeRoute = '';
+		//let activeRoute = 'Default Brand Text';
 		for (let i = 0; i < routes.length; i++) {
 			if (routes[i].collapse) {
 				let collapseActiveRoute = getActiveRoute(routes[i].items);
@@ -40,6 +41,8 @@ export default function Dashboard(props) {
 		}
 		return activeRoute;
 	};
+
+	
 	const getActiveNavbar = (routes) => {
 		let activeNavbar = false;
 		for (let i = 0; i < routes.length; i++) {
@@ -145,7 +148,7 @@ export default function Dashboard(props) {
 							</Box>
 						) : null}
 						<Box>
-							<Footer />
+							{/* <Footer /> */}
 						</Box>
 					</Box>
 				</SidebarContext.Provider>
