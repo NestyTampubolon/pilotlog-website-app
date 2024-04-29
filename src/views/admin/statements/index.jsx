@@ -21,7 +21,12 @@ export default function Statements() {
         request("GET", "/api/v1/admin/statements", {}
         ).then((response) => {
             setData(response.data);
-            console.log(data);
+            request("GET", "/api/v1/public/getgradeinstructor", {}
+            ).then((response) => {
+                console.log("check");
+                console.log(response.data);
+                console.log(response.data.total_rating);
+            });
         });
     }, []);
     const [content, setContent] = useState();

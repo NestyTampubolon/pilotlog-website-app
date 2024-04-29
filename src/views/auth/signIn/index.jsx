@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { setAuthToken, setUsersInfo } from 'axios_helper.js'
 import { NavLink } from "react-router-dom";
@@ -25,7 +25,8 @@ import illustration from "assets/img/auth/auth.png";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 import { useHistory } from 'react-router-dom';
-import { getUsersInfo } from "axios_helper";
+import { request } from 'axios_helper.js';
+import Swal from 'sweetalert2';
 function SignIn() {
   // Chakra color mode
   const textColor = useColorModeValue("navy.700", "white");
@@ -36,21 +37,70 @@ function SignIn() {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
   const history = useHistory();
-  const onLogin = (e) => {
-    e.preventDefault();
-    axios.post('/api/v1/auth/signin', { email , password })
-      .then((response) => {
-        setAuthToken(response.data.token);
-        setUsersInfo(response.data.users);
-        console.log(response.data.users);
-        history.push("/admin/default");
-      }).catch((error) => {
-        
-      });
-  };
-
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
+  const [errors, setErrors] = useState({
+    email: "",
+    password: ""
+  });
+
+
+  const onLogin = (e) => {
+    e.preventDefault();
+
+    if(!email || !password){
+      setErrors((prevErrors) => ({
+        email :  'Email is required',
+        password: 'Password is required' ,
+      }));
+      return;
+    }else{
+      setLoading(true); 
+      axios.post('/api/v1/auth/signin', { email, password })
+        .then((response) => {
+          setAuthToken(response.data.token);
+          setUsersInfo(response.data.users);
+          request("GET", "/api/v1/public/validationallpilot", {}
+          ).then((response) => {
+           
+            setLoading(false);
+            history.push("/admin/default");
+          });
+
+        }).catch((error) => {
+          setLoading(false);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Invalid Email or Password"
+          });
+        });
+    }
+    
+  };
+
+  useEffect(() => {
+    // Tampilkan swal saat loading aktif
+    if (loading) {
+      Swal.fire({
+        title: "Loading...",
+        html: "Please wait...",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+        onBeforeOpen: () => {
+          Swal.showLoading();
+        }
+      });
+    } else {
+      // Tutup swal jika loading telah selesai
+      Swal.close();
+    }
+  }, [loading]);
+
+
 
 
   return (
@@ -138,10 +188,11 @@ function SignIn() {
               ms={{ base: "0px", md: "0px" }}
               type='email'
               placeholder='mail@gmail.com'
-              mb='24px'
+              mb='5px'
               fontWeight='500'
               size='lg'
             />
+            {errors.email && <Text fontWeight='500' ms='10px' fontSize='sm' color='red.500'>{errors.email}</Text>}
             <FormLabel
               ms='4px'
               fontSize='sm'
@@ -159,7 +210,7 @@ function SignIn() {
                 isRequired={true}
                 fontSize='sm'
                 placeholder='Min. 8 characters'
-                mb='24px'
+                mb='5px'
                 size='lg'
                 type={show ? "text" : "password"}
                 variant='auth'
@@ -173,6 +224,7 @@ function SignIn() {
                 />
               </InputRightElement>
             </InputGroup>
+            {errors.password && <Text fontWeight='500' ms='10px' fontSize='sm' color='red.500'>{errors.password}</Text>}
             <Flex justifyContent='space-between' align='center' mb='24px'>
               <FormControl display='flex' alignItems='center'>
                 <Checkbox

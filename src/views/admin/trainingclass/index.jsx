@@ -14,7 +14,7 @@ export default function TrainingClass() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        request("GET", "/api/v1/admin/training", {}
+        request("GET", "/api/v1/public/training", {}
         ).then((response) => {
             setData(response.data);
         });

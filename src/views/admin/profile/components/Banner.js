@@ -187,7 +187,7 @@ export default function Banner(props) {
   const handleSubmitProfile = async (croppedResult) => {
     if (croppedResult) {
       const blobData = await fetchBlobData(croppedResult);
-      request("PUT", `/api/v1/admin/users/update/profile/${idusers}`, { profile: blobData }, 'multipart/form-data')
+      request("PUT", `/api/v1/public/users/update/profile/${idusers}`, { profile: blobData }, 'multipart/form-data')
         .then((response) => {
          if(response.status === 200){
            handleCloseModal();

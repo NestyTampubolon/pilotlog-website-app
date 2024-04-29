@@ -44,7 +44,7 @@ function Home() {
       <>
           <Box>
                 <Box bg="#3887BE" w='100%' p={4} h='400px' >
-                    <Flex minWidth='max-content' alignItems='center' gap='2'>
+                    <Flex minWidth='max-content' alignItems='center' gap='2' paddingX='40px'>
                         <Box p='2'>
                             <Heading size='md' color='white'>PILOTLOG</Heading>
                         </Box>
@@ -60,12 +60,12 @@ function Home() {
                         </ButtonGroup>
                     </Flex>
                     <Flex>
-                        <Box flex='2' flexDirection='column' justifyContent='space-around'>
+                        <Box flex='2' flexDirection='column' justifyContent='space-around' padding='60px'>
                             <Box flex={1}>
-                                <Text color='white' fontSize='40' letterSpacing='2px'>The best platform to help pilot class attendance</Text>
-                                <Text color={textColorSecondary}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ligula augue, efficitur a pharetra vitae, tincidunt eu odio. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In vel libero hendrerit velit vene</Text>
+                                <Text color='white' fontSize='44' fontWeight='bold'>The best platform to help pilot class attendance</Text>
+                                <Text color={textColorSecondary} fontSize='22'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ligula augue, efficitur a pharetra vitae, tincidunt eu odio. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In vel libero hendrerit velit vene</Text>
                             </Box>
-                            <ButtonGroup gap='10' marginTop='150px' padding='30px'>
+                            <ButtonGroup gap='10' marginTop='100px' padding='10px'>
                                 <Button bg={textColorBrand} color='white'>Get Started</Button>
                                 <Button color={textColorSecondary}>Download App</Button>
                             </ButtonGroup>
@@ -147,9 +147,9 @@ function Home() {
                 </Flex>
                 <Box w='100%' p={4} h='400px' my={10}>
                     <Flex>
-                        <Box flex='2' flexDirection='column' justifyContent='space-around'>
+                        <Box flex='2' flexDirection='column' justifyContent='space-around' padding='60px'>
                             <Box flex={1}>
-                                <Text color='black' fontSize='40' letterSpacing='2px' fontWeight='bold'>Features</Text>
+                                <Text color='black' fontSize='40' fontWeight='bold'>Features</Text>
                                 <Text color={textColorSecondary}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ligula augue, efficitur a pharetra vitae, tincidunt eu odio. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In vel libero hendrerit velit vene</Text>
                             </Box>
                         </Box>

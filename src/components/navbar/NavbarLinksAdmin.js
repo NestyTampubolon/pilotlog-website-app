@@ -28,6 +28,7 @@ import { ThemeEditor } from './ThemeEditor';
 import { getUsersInfo } from 'axios_helper.js'
 import { useHistory } from 'react-router-dom';
 import { removeAuthToken, removeRefreshToken, removeUsersInfo } from 'axios_helper.js';
+import FixedPlugin from "components/fixedPlugin/FixedPlugin";
 export default function HeaderLinks(props) {
 	const { secondary } = props;
 	// Chakra Color Mode
@@ -183,9 +184,9 @@ export default function HeaderLinks(props) {
           </Flex>
         </MenuList>
       </Menu> 
-
-			<ThemeEditor navbarIcon={navbarIcon} /> */}
-
+*/}
+			{/* <ThemeEditor navbarIcon={navbarIcon} />  */}
+			<FixedPlugin />
 			<Menu>
 				<MenuButton p="0px">
 					<Avatar
@@ -216,9 +217,6 @@ export default function HeaderLinks(props) {
 					<Flex flexDirection="column" p="10px">
 						<MenuItem onClick={toProfile} _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} borderRadius="8px" px="14px">
 							<Text fontSize="sm">Profile Settings</Text>
-						</MenuItem>
-						<MenuItem _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} borderRadius="8px" px="14px">
-							<Text fontSize="sm">Newsletter Settings</Text>
 						</MenuItem>
 						<MenuItem
 							onClick={onLogout}

@@ -120,7 +120,7 @@ export default function AttendanceDatail() {
     const box = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
 
     const handleSubmit = () => {
-        request("PUT", `/api/v1/admin/updatedoneattendance/${id}`, {})
+        request("PUT", `/api/v1/admin/attendance/confirmationAdmin/${id}`, {})
             .then((response) => {
                 if (response && response.status === 200) {
                     window.location.reload();

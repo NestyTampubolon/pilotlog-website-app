@@ -11,12 +11,6 @@ import {
   Button,
 } from "@chakra-ui/react";
 import React, { useMemo } from "react";
-import {
-  useGlobalFilter,
-  usePagination,
-  useSortBy,
-  useTable,
-} from "react-table";
 
 // Custom components
 import Card from "components/card/Card";
@@ -24,12 +18,17 @@ import { Link } from 'react-router-dom';
 // Custom components
 import SwitchField from "components/fields/SwitchField";
 import Menu from "components/menu/MainMenu";
+import {
+  useGlobalFilter,
+  usePagination,
+  useSortBy,
+  useTable,
+} from "react-table";
 export default function ColumnsTable(props) {
   const { columnsData, tableData } = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
-
   const tableInstance = useTable(
     {
       columns,
@@ -46,10 +45,16 @@ export default function ColumnsTable(props) {
     headerGroups,
     page,
     prepareRow,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
+    pageOptions,
+    gotoPage,
     initialState,
+    state: { pageIndex, pageSize },
   } = tableInstance;
   initialState.pageSize = 10;
-
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
   return (
@@ -58,7 +63,9 @@ export default function ColumnsTable(props) {
       w='100%'
       px='0px'
       overflowX={{ sm: "scroll", lg: "hidden" }}>
-      <Flex px='25px' justify='space-between' mb='20px' align='center'>
+      <Flex direction="column" w="100%" overflowX={{ sm: "scroll", lg: "hidden" }}>
+
+           <Flex px='25px' justify='space-between' mb='20px' align='center'>
         <Text
           color={textColor}
           fontSize='22px'
@@ -188,6 +195,50 @@ export default function ColumnsTable(props) {
           })}
         </Tbody>
       </Table>
+      <Flex justifyContent="center" mt="20px" alignItems="center">
+        <Button
+          onClick={() => previousPage()}
+          disabled={!canPreviousPage}
+          colorScheme="teal"
+          variant="outline"
+          mr="2"
+        >
+          Previous
+        </Button>
+        <Text mx="10px" fontSize="sm">
+          Page {pageIndex + 1} of {pageOptions.length}
+        </Text>
+        <Button
+          onClick={() => nextPage()}
+          disabled={!canNextPage}
+          colorScheme="teal"
+          variant="outline"
+          mr="2"
+        >
+          Next
+        </Button>
+        <Text fontSize="sm">Go to page:</Text>
+        <input
+          type="number"
+          defaultValue={pageIndex + 1}
+          onChange={(e) => {
+            const page = e.target.value ? Number(e.target.value) - 1 : 0;
+            gotoPage(page);
+          }}
+          style={{
+            width: "50px",
+            marginLeft: "5px",
+            marginRight: "5px",
+            borderRadius: "4px",
+            border: "1px solid #CBD5E0",
+            padding: "4px",
+            fontSize: "sm",
+          }}
+        />
+        <Text fontSize="sm"> / {pageOptions.length}</Text>
+      </Flex>
+      </Flex>
+   
     </Card>
   );
 }
