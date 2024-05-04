@@ -10,6 +10,8 @@ import {
   Thead,
   Tr,
   useColorModeValue,
+  Button,
+  Link
 } from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import {
@@ -22,9 +24,12 @@ import {
 // Custom components
 import Card from "components/card/Card";
 import Menu from "components/menu/MainMenu";
+import { request } from 'axios_helper.js';
 
 // Assets
 import { MdCheckCircle, MdCancel, MdOutlineError } from "react-icons/md";
+import Swal from 'sweetalert2';
+
 export default function ColumnsTable(props) {
   const { columnsData, tableData } = props;
 
@@ -53,19 +58,44 @@ export default function ColumnsTable(props) {
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
+
+
+  const confirmAction = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, enable/disable it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        request("PUT", `/api/v1/superadmin/company/activation/${id}`, {})
+          .then((response) => {
+           if(response.status === 200){
+             window.location.reload();
+           }
+
+          })
+          .catch((err) => console.log(err));
+      }
+    });
+  };
+
   return (
     <Card
       direction='column'
       w='100%'
       px='0px'
       overflowX={{ sm: "scroll", lg: "hidden" }}>
-      <Flex px='25px' justify='space-between' mb='10px' align='center'>
+      <Flex px='25px' justify='space-between' mb='20px' align='center'>
         <Text
           color={textColor}
           fontSize='22px'
           fontWeight='700'
           lineHeight='100%'>
-          Complex Table
+          List Company
         </Text>
         <Menu />
       </Flex>
@@ -104,54 +134,36 @@ export default function ColumnsTable(props) {
                         {cell.value}
                       </Text>
                     );
-                  } else if (cell.column.Header === "STATUS") {
+                  } else if (cell.column.Header === "VERIFICATION") {
                     data = (
                       <Flex align='center'>
-                        <Icon
-                          w='24px'
-                          h='24px'
-                          me='5px'
-                          color={
-                            cell.value === "Approved"
-                              ? "green.500"
-                              : cell.value === "Disable"
-                              ? "red.500"
-                              : cell.value === "Error"
-                              ? "orange.500"
-                              : null
-                          }
-                          as={
-                            cell.value === "Approved"
-                              ? MdCheckCircle
-                              : cell.value === "Disable"
-                              ? MdCancel
-                              : cell.value === "Error"
-                              ? MdOutlineError
-                              : null
-                          }
-                        />
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.value}
-                        </Text>
+                        {cell.value == 1 &&              
+                          <Button variant='brand' onClick={() => confirmAction(cell.row.original.action)}>Enable</Button>
+                        }
+
+                        {cell.value == 0 &&
+                          <Button variant='lightBrand' onClick={() => confirmAction(cell.row.original.action)}>Disable</Button>
+                        }
+
                       </Flex>
                     );
-                  } else if (cell.column.Header === "DATE") {
+                  } else if (cell.column.Header === "EMAIL") {
                     data = (
                       <Text color={textColor} fontSize='sm' fontWeight='700'>
                         {cell.value}
                       </Text>
                     );
-                  } else if (cell.column.Header === "PROGRESS") {
+                  } else if (cell.column.Header === "CONTACT") {
                     data = (
-                      <Flex align='center'>
-                        <Progress
-                          variant='table'
-                          colorScheme='brandScheme'
-                          h='8px'
-                          w='108px'
-                          value={cell.value}
-                        />
-                      </Flex>
+                      <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === "ACTION") {
+                    data = (
+                      <Link href={`#/superadmin/companydetail/${cell.value}`}>
+                        <Button variant='outline'>View Detail</Button>
+                      </Link>
                     );
                   }
                   return (
@@ -159,8 +171,6 @@ export default function ColumnsTable(props) {
                       {...cell.getCellProps()}
                       key={index}
                       fontSize={{ sm: "14px" }}
-                      maxH='30px !important'
-                      py='8px'
                       minW={{ sm: "150px", md: "200px", lg: "auto" }}
                       borderColor='transparent'>
                       {data}

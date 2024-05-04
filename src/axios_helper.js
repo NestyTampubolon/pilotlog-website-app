@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://192.168.155.154:8080';
+axios.defaults.baseURL = 'http://192.168.164.154:8080';
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 export const IMAGE_BASE_URL = `${axios.defaults.baseURL}/api/v1/images/`;
@@ -17,7 +17,6 @@ export const setAuthToken = (token) => {
 export const removeAuthToken = () => {
     window.localStorage.removeItem("auth_token");
 };
-
 
 
 export const getRefreshToken = () => {

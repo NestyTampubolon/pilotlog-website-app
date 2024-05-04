@@ -1,11 +1,7 @@
 // Chakra imports
 import {
-  Avatar,
   Box,
   Flex,
-  FormLabel,
-  Icon,
-  Select,
   SimpleGrid,
   useColorModeValue,
   Text,
@@ -15,50 +11,27 @@ import {
   Image
 } from "@chakra-ui/react";
 // Assets
-import Usa from "assets/img/dashboards/usa.png";
 // Custom components
 import MiniCalendar from "components/calendar/MiniCalendar";
-import MiniStatistics from "components/card/MiniStatistics";
 import Card from "components/card/Card";
-import IconBox from "components/icons/IconBox";
 import moment from 'moment-timezone';
-import {
-  MdAddTask,
-  MdAttachMoney,
-  MdBarChart,
-  MdFileCopy,
-} from "react-icons/md";
-import CheckTable from "views/admin/default/components/CheckTable";
 import ComplexTable from "views/admin/default/components/ComplexTable";
-import DailyTraffic from "views/admin/default/components/DailyTraffic";
-import PieCard from "views/admin/default/components/PieCard";
-import Tasks from "views/admin/default/components/Tasks";
-import TotalSpent from "views/admin/default/components/TotalSpent";
-import WeeklyRevenue from "views/admin/default/components/WeeklyRevenue";
 import {
-  columnsDataCheck,
   columnsDataComplex,
 } from "views/admin/default/variables/columnsData";
-import tableDataCheck from "views/admin/default/variables/tableDataCheck.json";
-import tableDataComplex from "views/admin/default/variables/tableDataComplex.json";
 import React, { useState, useEffect } from "react";
 import { getUsersInfo, request, IMAGE_BASE_URL } from 'axios_helper.js';
 export default function UserReports() {
   // Chakra Color Mode
-  const brandColor = useColorModeValue("brand.500", "white");
-  const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const textColorSecondary = "secondaryGray.600";
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [logo, setLogo] = useState(null);
-  const [contact, setContact] = useState();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [data, setData] = useState([]);
 
   const fetchData = (date) => {
-    console.log("Fetching data for date:", date);
-    console.log("Fetching data for date:", selectedDate.toUTCString());
 
     request("POST", "/api/v1/admin/attendance", { date: moment(date).tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') })
       .then((response) => {
@@ -82,12 +55,11 @@ export default function UserReports() {
     const userInfo = getUsersInfo();
     const companyId = userInfo && userInfo.id_company.id_company;
 
-    request("GET", `/api/v1/admin/company/${companyId}`, {}
+    request("GET", `/api/v1/public/company/${companyId}`, {}
     ).then((response) => {
       setName(response.data.name);
       setEmail(response.data.email);
       setLogo(response.data.logo);
-      setContact(response.data.contact);
     });
   }, []);
 
@@ -142,13 +114,6 @@ export default function UserReports() {
 
       <Flex flexDirection={'row'} style={{ paddingBottom: '20px' }}>
         <MiniCalendar flex="1" h='100%' selectRange={false} style={{ marginRight: '20px' }} onChange={handleDateChange} />
-        {/* <Text>Date: {selectedDate.toDateString()}</Text> 
-        <Text>Date: {selectedDate.toISOString().split('T', 1)[0]}</Text>
-        <Text>Date: {new Date(selectedDate.toLocaleDateString()).toISOString().split('T')[0]}</Text>
-        <Text>Date: {moment(selectedDate).tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD')}</Text> */}
-
-
-
         <SimpleGrid flex="2">
           {data.length >= 1 && <ComplexTable
             flex="2"
@@ -160,25 +125,14 @@ export default function UserReports() {
             }))}
           />}
 
-          {data.length == 0 && <Text alignItems={'center'} fontSize={'50px'} fontWeight={'bold'} justifyContent={'center'} align={'center'}>
+          {data.length === 0 && <Text alignItems={'center'} fontSize={'50px'} fontWeight={'bold'} justifyContent={'center'} align={'center'}>
             No trainings on this date
           </Text>}
         </SimpleGrid>
       </Flex>
-      
 
 
-      <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
-        <SimpleGrid colSpan={1} columns={{ base: 1, md: 1, xl: 1 }} gap='20px'>
-          <MiniCalendar h='100%' minW='100%' selectRange={false} />
-        </SimpleGrid>
-        <SimpleGrid colSpan={2} columns={{ base: 1, md: 1, xl: 1 }} gap='20px'>
-          <MiniCalendar h='100%' minW='100%' selectRange={false} />
-        </SimpleGrid>
-      </SimpleGrid>
-
-
-
+{/* 
       <SimpleGrid
         columns={{ base: 1, md: 2, lg: 3, "2xl": 6 }}
         gap='20px'
@@ -281,7 +235,7 @@ export default function UserReports() {
           <Tasks />
           <MiniCalendar h='100%' minW='100%' selectRange={false} />
         </SimpleGrid>
-      </SimpleGrid>
+      </SimpleGrid> */}
     </Box>
   );
 }

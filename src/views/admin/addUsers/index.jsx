@@ -2,32 +2,22 @@ import {
     Box, 
     SimpleGrid, 
     Button, 
-    Link,
     Checkbox,
     Flex,
     FormControl,
     FormLabel,
-    Heading,
-    Icon,
     Input,
     InputGroup,
-    InputRightElement,
     Text,
     Select,
-    useColorModeValue, 
     Radio, 
     RadioGroup
 } from "@chakra-ui/react";
 import Card from "components/card/Card";
 import React, { useState, useEffect } from "react";
-import { request, getAuthToken } from 'axios_helper.js'
+import { request } from 'axios_helper.js'
 import { useHistory } from 'react-router-dom';
 export default function AddUsers() {
-    const textColor = useColorModeValue("navy.700", "white");
-    const textColorSecondary = "gray.400";
-    const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
-    const textColorBrand = useColorModeValue("brand.500", "white");
-    const brandStars = useColorModeValue("brand.500", "brand.400");
     const [name, setName] = useState();
     const [email, setEmail] = useState();
     const [idno, setIdNo] = useState();
@@ -35,7 +25,6 @@ export default function AddUsers() {
     const [rank, setRank] = useState('CAPT');
     const [hub, setHub] = useState('CGK');
     const [role, setRole] = useState();
-    const textColorError = useColorModeValue("red.500", "white");
     const [checkboxes, setCheckboxes] = useState({
         admin: false,
         cpts: false,
@@ -176,15 +165,6 @@ export default function AddUsers() {
         // handle API call here
         console.log('Form submitted:', { name, email, idno, license, rank, hub, role });
     };
-
-    const checkedCheckboxes = (e) => {
-        Object.keys(checkboxes).filter(name => checkboxes[name]);
-
-        if (Object.keys(checkboxes).filter(name => checkboxes[name])){
-
-        }
-    };
-
 
     return (
         <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>

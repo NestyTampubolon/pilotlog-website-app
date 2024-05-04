@@ -2,20 +2,14 @@ import {
     Box,
     SimpleGrid,
     Button,
-    Checkbox,
     Flex,
     FormControl,
     FormLabel,
-    Heading,
     Icon,
     Input,
     InputGroup,
-    InputRightElement,
     Text,
     Select,
-    useColorModeValue, 
-    Textarea,
-    Grid,
 } from "@chakra-ui/react";
 import Card from "components/card/Card";
 import React, { useState, useEffect } from "react";
@@ -31,7 +25,6 @@ export default function AddAttendance() {
     const [department, setDepartment] = useState();
     const [venue, setVenue] = useState();
     const [room, setRoom] = useState();
-    const [trainingType, setTrainingType] = useState("");
     const [date, setDate] = useState();
     const [start_time, setStartTime] = useState("");
     const [end_time, setEndTime] = useState("");
@@ -41,7 +34,6 @@ export default function AddAttendance() {
     const [dataVenue, setDataVenue] = useState([]);
     const [dataRoom, setDataRoom] = useState([]);
     const [dataInstructor, setDataInstructor] = useState([]);
-    const textColorError = useColorModeValue("red.500", "white");
     const [errors, setErrors] = useState({
         subject: "",
         department: "",
@@ -53,7 +45,6 @@ export default function AddAttendance() {
         end_time: ""
     });
     
-
     const history = useHistory();
    const handleInputChange = (e) => {
         const { name, value } = e.target;

@@ -2,37 +2,23 @@ import {
     Box,
     SimpleGrid,
     Button,
-    Checkbox,
     Flex,
     FormControl,
     FormLabel,
-    Heading,
-    Icon,
     Input,
     InputGroup,
-    InputRightElement,
     Text,
     Select,
-    useColorModeValue, 
-    Textarea,
-    Grid,
 } from "@chakra-ui/react";
 import Card from "components/card/Card";
 import React, { useState, useEffect } from "react";
 import { request } from 'axios_helper.js';
 import { useHistory, useParams } from 'react-router-dom';
-import {
-    MdOutlineAdd
-} from "react-icons/md";
-import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom';
-
 export default function EditAttendance() {
     const [subject, setSubject] = useState();
     const [department, setDepartment] = useState();
     const [venue, setVenue] = useState();
     const [room, setRoom] = useState();
-    const [trainingType, setTrainingType] = useState("");
     const [date, setDate] = useState();
     const [start_time, setStartTime] = useState("");
     const [end_time, setEndTime] = useState("");
@@ -42,7 +28,6 @@ export default function EditAttendance() {
     const [dataVenue, setDataVenue] = useState([]);
     const [dataRoom, setDataRoom] = useState([]);
     const [dataInstructor, setDataInstructor] = useState([]);
-    const textColorError = useColorModeValue("red.500", "white");
     const [errors, setErrors] = useState({
         subject: "",
         department: "",

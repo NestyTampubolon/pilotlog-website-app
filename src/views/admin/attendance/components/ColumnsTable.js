@@ -22,7 +22,6 @@ import {
 import Card from "components/card/Card";
 import { Link } from 'react-router-dom';
 // Custom components
-import SwitchField from "components/fields/SwitchField";
 import Menu from "components/menu/MainMenu";
 export default function ColumnsTable(props) {
   const { columnsData, tableData } = props;

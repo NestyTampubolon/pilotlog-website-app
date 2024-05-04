@@ -3,13 +3,12 @@ import ColumnsTable from "views/admin/attendance/components/ColumnsTable";
 import {
     columnsDataColumns,
 } from "views/admin/attendance/variables/columnsData";
-import tableDataColumns from "views/admin/attendance/variables/tableDataColumns.json";
 import {
     MdOutlineAdd
 } from "react-icons/md";
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
-import { request, getUsersInfo } from 'axios_helper.js'
+import { request } from 'axios_helper.js'
 import ExportPDF from "./components/ExportPDF";
 
 export default function Attendance() {

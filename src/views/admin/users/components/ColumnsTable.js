@@ -25,6 +25,7 @@ import {
   useTable,
 } from "react-table";
 export default function ColumnsTable(props) {
+  
   const { columnsData, tableData } = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
@@ -170,8 +171,12 @@ export default function ColumnsTable(props) {
                       </Button>
                     );
                   } else if (cell.column.Header === "ACTION") {
+                    const originalValue = cell.value; // Accessing the action value directly from cell.row.original
+                    const encodedValue = encodeURIComponent(originalValue);
+                    const url = `/admin/userdetail/${encodedValue}`;
+
                     data = (
-                      <Link to={`/admin/userdetail/${cell.value}`}>
+                      <Link to={url}>
 
                         <Button variant='action'>View Details</Button>
                       </Link>

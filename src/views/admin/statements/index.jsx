@@ -1,13 +1,8 @@
-import { Box, SimpleGrid, Button, Flex, Icon, Text, FormControl, FormLabel, InputGroup, Select, Input } from "@chakra-ui/react";
+import { Box, SimpleGrid, Button, Flex, Text, FormControl, FormLabel, InputGroup, Select, Input } from "@chakra-ui/react";
 import ColumnsTable from "views/admin/statements/components/ColumnsTable";
 import {
     columnsDataColumns,
 } from "views/admin/statements/variables/columnsData";
-import tableDataColumns from "views/admin/attendance/variables/tableDataColumns.json";
-import {
-    MdOutlineAdd
-} from "react-icons/md";
-import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
 import { request } from 'axios_helper.js'
 import Card from "components/card/Card";

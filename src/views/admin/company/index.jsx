@@ -2,27 +2,21 @@ import {
     Box,
     SimpleGrid,
     Button,
-    Checkbox,
     Flex,
     FormControl,
-    FormLabel,
-    Heading,
+    FormLabel, 
     Icon,
     Input,
     InputGroup,
-    InputRightElement,
     Text,
     Image,
     useColorModeValue,
-    Textarea,
-    Grid,
     
 } from "@chakra-ui/react";
 import { getUsersInfo } from 'axios_helper.js'
 import Card from "components/card/Card";
 import React, { useState, useEffect } from "react";
 import { request, IMAGE_BASE_URL } from 'axios_helper.js';
-import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Dropzone from "./Dropzone";
 import { MdUpload } from "react-icons/md";
@@ -32,9 +26,6 @@ export default function Company() {
     const [email, setEmail] = useState();
     const [logo, setLogo] = useState(null);
     const [contact, setContact] = useState();
-    const [data, setData] = useState([]);
-    const [file, setFile] = useState(null);
-    const textColorError = useColorModeValue("red.500", "white");
     const [errors, setErrors] = useState({
         name: "",
         email: "",
@@ -121,20 +112,11 @@ export default function Company() {
         }
     }
 
-
-
-    const handleDropzoneSubmit = (file) => {
-        setLogo(file);
-        console.log(file);
-        setErrors((prevErrors) => ({ ...prevErrors, logo: '' }));
-    };
-
-
     useEffect(() => {
         const userInfo = getUsersInfo();
         const companyId = userInfo && userInfo.id_company.id_company;
 
-        request("GET", `/api/v1/admin/company/${companyId}`, {}
+        request("GET", `/api/v1/public/company/${companyId}`, {}
         ).then((response) => {
             setName(response.data.name);
             setEmail(response.data.email);

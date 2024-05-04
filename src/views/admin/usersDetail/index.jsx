@@ -1,4 +1,4 @@
-import { Box, Grid, Badge, SimpleGrid } from "@chakra-ui/react";
+import { Box, Grid, SimpleGrid } from "@chakra-ui/react";
 import Banner from "views/admin/usersDetail/components/Banner";
 import { useParams } from 'react-router-dom';
 import { request, IMAGE_BASE_URL } from 'axios_helper.js'
@@ -7,7 +7,6 @@ import ColumnsTable from "views/admin/usersDetail/components/ColumnsTable";
 import {
     columnsDataColumns,
 } from "views/admin/usersDetail/variables/columnsData";
-import tableDataColumns from "views/admin/usersDetail/variables/tableDataColumns.json";
 export default function UsersDetail() {
     const [name, setName] = useState();
     const [role, setRole] = useState();
@@ -22,7 +21,7 @@ export default function UsersDetail() {
 
     const { id } = useParams();
     useEffect(() => {
-        request("GET", "/api/v1/admin/users/" + id, {}
+        request("GET", "/api/v1/public/users/" + id, {}
         ).then((response) => {
             setName(response.data.name);
             setRole(response.data.role);

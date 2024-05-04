@@ -3,7 +3,7 @@ import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 // chakra imports
 import { Box, Flex, HStack, Text, useColorModeValue } from "@chakra-ui/react";
-
+import { getUsersInfo } from 'axios_helper.js'
 export function SidebarLinks(props) {
   //   Chakra color mode
   let location = useLocation();
@@ -47,18 +47,26 @@ export function SidebarLinks(props) {
           </>
         );
       } else if (  
-        route.path === "/default" || 
-        route.path === "/users" ||
-        route.path === "/attendance" ||
-        route.path === "/trainingclass" ||
-        route.path === "/certificate" ||
-        route.path === "/statements" ||
-        route.path === "/company" 
-        // ||
-        // route.path === "/nft-marketplace" ||
-        // route.path === "/data-tables" ||
-        // route.path === "/profile" ||
-        // route.path === "/rtl-default"
+        getUsersInfo().role === 'ADMIN' &&
+        (
+          route.path === "/default" ||
+          route.path === "/users" ||
+          route.path === "/attendance" ||
+          route.path === "/trainingclass" ||
+          route.path === "/certificate" ||
+          route.path === "/statements" ||
+          route.path === "/company" 
+        ) ||
+
+        getUsersInfo().role === 'SUPERADMIN' && (
+          route.path === "/main"
+        )
+        
+          // route.path === "/rtl-default" ||
+          // route.path === "/main"
+      // route.path === "/nft-marketplace" ||
+      // route.path === "/data-tables" ||
+      // route.path === "/profile" ||e
       ) {
         return (
           <NavLink key={index} to={route.layout + route.path}>

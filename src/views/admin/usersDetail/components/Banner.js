@@ -81,6 +81,7 @@ export default function Banner(props) {
             Hub
           </Text>
         </Flex>
+        {license && license != ' ' &&  
         <Flex mx='auto' align='center' direction='column'>
           <Text color={textColorPrimary} fontSize='2xl' fontWeight='700'>
             {license}
@@ -89,6 +90,8 @@ export default function Banner(props) {
             License
           </Text>
         </Flex>
+        }
+      
         
       </Flex>
     </Card>

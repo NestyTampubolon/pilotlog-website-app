@@ -2,25 +2,20 @@ import {
     Box,
     SimpleGrid,
     Button,
-    Link,
     Checkbox,
     Flex,
     FormControl,
     FormLabel,
-    Heading,
-    Icon,
     Input,
     InputGroup,
-    InputRightElement,
     Text,
     Select,
-    useColorModeValue,
     Radio,
     RadioGroup
 } from "@chakra-ui/react";
 import Card from "components/card/Card";
 import React, { useState, useEffect } from "react";
-import { request, getAuthToken } from 'axios_helper.js';
+import { request } from 'axios_helper.js';
 import { useHistory, useParams } from 'react-router-dom';
 export default function EditUsers() {
     const [name, setName] = useState();
@@ -30,7 +25,6 @@ export default function EditUsers() {
     const [rank, setRank] = useState('CAPT');
     const [hub, setHub] = useState();
     const [role, setRole] = useState();
-    const textColorError = useColorModeValue("red.500", "white");
     const [checkboxes, setCheckboxes] = useState({
         admin: false,
         cpts: false,
@@ -42,7 +36,7 @@ export default function EditUsers() {
     const { id } = useParams();
 
     useEffect(() => {
-        request("GET", "/api/v1/admin/users/" + id, {}
+        request("GET", "/api/v1/public/users/" + id, {}
         ).then((response) => {
             setName(response.data.name);
             setEmail(response.data.email);

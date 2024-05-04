@@ -52,7 +52,14 @@ export default function ColumnsTable(props) {
     headerGroups,
     page,
     prepareRow,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
+    pageOptions,
+    gotoPage,
     initialState,
+    state: { pageIndex, pageSize },
   } = tableInstance;
   initialState.pageSize = 10;
 
@@ -203,6 +210,48 @@ export default function ColumnsTable(props) {
           })}
         </Tbody>
       </Table>
+      <Flex justifyContent="center" mt="20px" alignItems="center">
+        <Button
+          onClick={() => previousPage()}
+          disabled={!canPreviousPage}
+          colorScheme="teal"
+          variant="outline"
+          mr="2"
+        >
+          Previous
+        </Button>
+        <Text mx="10px" fontSize="sm">
+          Page {pageIndex + 1} of {pageOptions.length}
+        </Text>
+        <Button
+          onClick={() => nextPage()}
+          disabled={!canNextPage}
+          colorScheme="teal"
+          variant="outline"
+          mr="2"
+        >
+          Next
+        </Button>
+        <Text fontSize="sm">Go to page:</Text>
+        <input
+          type="number"
+          defaultValue={pageIndex + 1}
+          onChange={(e) => {
+            const page = e.target.value ? Number(e.target.value) - 1 : 0;
+            gotoPage(page);
+          }}
+          style={{
+            width: "50px",
+            marginLeft: "5px",
+            marginRight: "5px",
+            borderRadius: "4px",
+            border: "1px solid #CBD5E0",
+            padding: "4px",
+            fontSize: "sm",
+          }}
+        />
+        <Text fontSize="sm"> / {pageOptions.length}</Text>
+      </Flex>
     </Card>
   );
 }

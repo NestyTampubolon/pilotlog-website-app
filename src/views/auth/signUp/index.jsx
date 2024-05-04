@@ -1,12 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { setAuthToken, setUsersInfo } from 'axios_helper.js'
-import { NavLink } from "react-router-dom";
-// Chakra imports
 import {
     Box,
     Button,
-    Checkbox,
     Flex,
     FormControl,
     FormLabel,
@@ -23,31 +20,20 @@ import { MdArrowForward, MdArrowBack } from "react-icons/md";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 import { useHistory } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 function SignUp() {
     // Chakra color mode
     const textColor = useColorModeValue("navy.700", "white");
     const textColorSecondary = "gray.400";
-    const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
-    const textColorBrand = useColorModeValue("brand.500", "white");
     const brandStars = useColorModeValue("brand.500", "brand.400");
     const [show, setShow] = React.useState(false);
     const [showConfirmation, setShowConfirmation] = React.useState(false);
+    const [loading, setLoading] = useState(false);
     const handleClick = () => setShow(!show);
     const handleClickConfirmation = () => setShowConfirmation(!showConfirmation);
     const history = useHistory();
-    const onLogin = (e) => {
-        e.preventDefault();
-        axios.post('/api/v1/auth/signin', { email, password })
-            .then((response) => {
-                setAuthToken(response.data.token);
-                setUsersInfo(response.data.users);
-                console.log(response.data.users);
-                history.push("/admin/default");
-            }).catch((error) => {
 
-            });
-    };
 
     const [email, setEmail] = useState()
     const [name, setName] = useState()
@@ -57,7 +43,6 @@ function SignUp() {
     const [confirmationPassword, setConfirmationPassword] = useState()
     const [cemail, setCEmail] = useState()
     const [cname, setCName] = useState()
-    const [clogo, setCLogo] = useState()
     const [ccontact, setCContact] = useState()
 
     const [errors, setErrors] = useState({
@@ -66,14 +51,25 @@ function SignUp() {
         idNo: "",
         hub: "",
         password: "",
-        confirmationPassword: ""
+        confirmationPassword: "",
+       cname: "", 
+       cemail: "", 
+       ccontact: "",
+       clogo: ""
     });
 
     const [showForm1, setShowForm1] = useState(true);
     const [showForm2, setShowForm2] = useState(false);
 
     const handleNextButtonClick = () => {
-        if (!name || !email || !idNo || !hub || !password || !confirmationPassword) {
+        // Regular expression for validating email format
+        const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Regular expression for validating password format
+        const passwordFormat = /^.{8,}$/;
+        console.log(name + email + idNo + hub + password + confirmationPassword);
+
+        if (!name || !idNo || !hub || !password || !confirmationPassword) {
             setErrors((prevErrors) => ({
                 name: !name ? 'Name is required' : prevErrors.name,
                 email: !email ? 'Email is required' : prevErrors.email,
@@ -83,17 +79,37 @@ function SignUp() {
                 confirmationPassword: !confirmationPassword ? 'Confirmation Password is required' : prevErrors.confirmationPassword,
             }));
             return;
-        }else if(password !== confirmationPassword){
-            setErrors((prevErrors) => ({
-                password: 'Passwords do not match' ,
-                confirmationPassword: 'Passwords do not match' ,
-            }));
-        }else{
-            setShowForm1(false);
-            setShowForm2(true);
         }
 
+        else if (!emailFormat.test(email)) {
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                email: 'Invalid email format',
+            }));
+            return;
+        }
+
+        else if (password !== confirmationPassword) {
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                password: 'Passwords do not match',
+                confirmationPassword: 'Passwords do not match',
+            }));
+            return;
+        }
+
+        else if (!passwordFormat.test(password)) {
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                password: 'Password must be at least 8 characters long',
+            }));
+            return;
+        }
+
+        setShowForm1(false);
+        setShowForm2(true);
     };
+
 
     const handlePreviousButtonClick = () => {
         setShowForm1(true);
@@ -104,18 +120,38 @@ function SignUp() {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        if (!cname || !cemail || !clogo || !ccontact) {
+        console.log(cname + cemail + ccontact);
+        const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+
+        if (!cname || !cemail || !ccontact) {
             setErrors((prevErrors) => ({
-                cname:  'Company name is required',
+                cname: !cname ? 'Company name is required' : prevErrors.cname,
                 cemail:'Company email is required' ,
-                clogo: 'Company logi is required',
                 ccontact:'Company contact is required',
+            }));
+        } else if (!emailFormat.test(email)) {
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                cemail: 'Invalid  email format',
             }));
             return;
         } else {
+            setLoading(true);
             axios.post('/api/v1/auth/signup', { users : {name, email, password, id_no : idNo, hub}, company : {name : cname, email : cemail, contact : ccontact}})
                 .then((response) => {
+                    if(response.status === 200){
+                        Swal.fire({
+                            title: "Success!",
+                            text: "Successfully create company",
+                            icon: "success"
+                        });
+                        history.push("/home/");
+                        console.log(response.data);
 
+                    }
+              
                 }).catch((error) => {
 
                 });
@@ -123,6 +159,27 @@ function SignUp() {
 
    
     };
+
+    useEffect(() => {
+        // Tampilkan swal saat loading aktif
+        if (loading) {
+            Swal.fire({
+                title: "Loading...",
+                html: "Please wait...",
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                onBeforeOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        } else {
+            // Tutup swal jika loading telah selesai
+            Swal.close();
+        }
+    }, [loading]);
+
 
     return (
         <Flex position='relative' h='max-content'>
@@ -250,7 +307,6 @@ function SignUp() {
                                         isRequired={true}
                                         fontSize='sm'
                                         placeholder='Min. 8 characters'
-                                        mb='24px'
                                         size='lg'
                                         type={show ? "text" : "password"}
                                         variant='auth'
@@ -379,6 +435,7 @@ function SignUp() {
                                         fontWeight='500'
                                         size='lg'
                                     />
+                                    {errors.cname && <Text fontWeight='500' ms='10px' fontSize='sm' color='red.500'>{errors.cname}</Text>}
                                 </Box>
                                 <Box flex='1' ml='12px'>
                                     <FormLabel
@@ -403,32 +460,10 @@ function SignUp() {
                                         fontWeight='500'
                                         size='lg'
                                     />
+                                    {errors.cemail && <Text fontWeight='500' ms='10px' fontSize='sm' color='red.500'>{errors.cemail}</Text>}
                                 </Box>
                             </Flex>
                             <Flex flexDirection='row' mb='24px'>
-                                <Box flex='1' mr='12px'>
-                                    <FormLabel
-                                        display='flex'
-                                        ms='4px'
-                                        fontSize='sm'
-                                        fontWeight='500'
-                                        color={textColor}
-                                        mb='8px'>
-                                        Company Logo<Text color={brandStars}>*</Text>
-                                    </FormLabel>
-                                    <Input
-                                        name="clogo"
-                                        id="clogo"
-                                        isRequired={true}
-                                        onChange={e => setCLogo(e.target.value)}
-                                        variant='auth'
-                                        fontSize='sm'
-                                        type='text'
-                                        placeholder='123456'
-                                        fontWeight='500'
-                                        size='lg'
-                                    />
-                                </Box>
                                 <Box flex='1' ml='12px'>
                                     <FormLabel
                                         display='flex'
@@ -447,12 +482,13 @@ function SignUp() {
                                             onChange={e => setCContact(e.target.value)}
                                             isRequired={true}
                                             fontSize='sm'
-                                            placeholder='08'
+                                            placeholder='08xxxxxxxxxx'
                                             mb='24px'
                                             size='lg'
                                             variant='auth'
                                         />
                                     </InputGroup>
+                                    {errors.ccontact && <Text fontWeight='500' ms='10px' fontSize='sm' color='red.500'>{errors.ccontact}</Text>}
                                 </Box>
                             </Flex>
                             <Flex justifyContent='space-between'>

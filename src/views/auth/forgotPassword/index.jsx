@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { setAuthToken, setUsersInfo } from 'axios_helper.js'
-import { NavLink } from "react-router-dom";
 // Chakra imports
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   FormControl,
   FormLabel,
   Heading,
-  Icon,
   Input,
-  InputGroup,
-  InputRightElement,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -22,24 +16,15 @@ import {
 import DefaultAuth from "layouts/auth/Default";
 // Assets
 import illustration from "assets/img/auth/auth.png";
-import { MdOutlineRemoveRedEye } from "react-icons/md";
-import { RiEyeCloseLine } from "react-icons/ri";
 import { useHistory } from 'react-router-dom';
-import { request } from 'axios_helper.js';
 import Swal from 'sweetalert2';
-function SignIn() {
+function ForgotPassword() {
   // Chakra color mode
   const textColor = useColorModeValue("navy.700", "white");
-  const textColorSecondary = "gray.400";
-  const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
-  const textColorBrand = useColorModeValue("brand.500", "white");
   const brandStars = useColorModeValue("brand.500", "brand.400");
-  const [show, setShow] = React.useState(false);
-  const handleClick = () => setShow(!show);
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
   const [errors, setErrors] = useState({
     email: "",
     password: ""
@@ -49,53 +34,44 @@ function SignIn() {
   const onLogin = (e) => {
     e.preventDefault();
 
-    if (!email || !password) {
+    if (!email) {
       setErrors((prevErrors) => ({
         email: 'Email is required',
-        password: 'Password is required',
       }));
       return;
     } else {
       setLoading(true);
-      axios.post('/api/v1/auth/signin', { email, password })
+      axios.post('/api/v1/auth/verifyMail/' + email, )
         .then((response) => {
-          console.log(response.data.users);
-          setAuthToken(response.data.token);
-          setUsersInfo(response.data.users);
-          if(response.data.users.id_company.is_active === 0){
+          if(response.status === 200){
             Swal.fire({
-              title: "Act",
-              text: "That thing is still around?",
-              icon: "question"
+              icon: "success",
+              title: response.data,
+              showConfirmButton: false,
+              timer: 1500
             });
-          }else{
-            if (response.data.users.role === 'ADMIN') {
-            request("GET", "/api/v1/public/validationallpilot", {}
-            ).then((response) => {
-              setLoading(false);
-              history.push("/admin/default");
-            });
-          } else if (response.data.users.role === 'SUPERADMIN') {
-            console.log("test");
-            setLoading(false);
-            history.push("/superadmin/main");
-          }else{
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Invalid Email or Password"
-            });
+            history.push(`/auth/verifyotp/${email}`);
           }
-          }
-          
-
 
         }).catch((error) => {
-          setLoading(false);
+          let errorMessage = "An error occurred.";
+
+          if (error.response) {
+            if (error.response.status === 403) {
+              errorMessage = error.response.statusText;
+            } else {
+              errorMessage = error.response.data;
+            }
+          } else if (error.request) {
+            errorMessage = 'No response received from server.';
+          } else {
+            errorMessage = error.message;
+          }
+
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Invalid Email or Password"
+            text: errorMessage
           });
         });
     }
@@ -142,7 +118,7 @@ function SignIn() {
         flexDirection='column'>
         <Box me='auto'>
           <Heading color={textColor} fontSize='36px' mb='10px'>
-            Sign In
+            Confirmation Email
           </Heading>
           {/* <Text
             mb='36px'
@@ -215,64 +191,6 @@ function SignIn() {
               size='lg'
             />
             {errors.email && <Text fontWeight='500' ms='10px' fontSize='sm' color='red.500'>{errors.email}</Text>}
-            <FormLabel
-              ms='4px'
-              fontSize='sm'
-              fontWeight='500'
-              color={textColor}
-              display='flex'>
-              Password<Text color={brandStars}>*</Text>
-            </FormLabel>
-            <InputGroup size='md'>
-              <Input
-                name="password"
-                id="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                isRequired={true}
-                fontSize='sm'
-                placeholder='Min. 8 characters'
-                mb='5px'
-                size='lg'
-                type={show ? "text" : "password"}
-                variant='auth'
-              />
-              <InputRightElement display='flex' alignItems='center' mt='4px'>
-                <Icon
-                  color={textColorSecondary}
-                  _hover={{ cursor: "pointer" }}
-                  as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                  onClick={handleClick}
-                />
-              </InputRightElement>
-            </InputGroup>
-            {errors.password && <Text fontWeight='500' ms='10px' fontSize='sm' color='red.500'>{errors.password}</Text>}
-            <Flex justifyContent='space-between' align='center' mb='24px'>
-              <FormControl display='flex' alignItems='center'>
-                <Checkbox
-                  id='remember-login'
-                  colorScheme='brandScheme'
-                  me='10px'
-                />
-                <FormLabel
-                  htmlFor='remember-login'
-                  mb='0'
-                  fontWeight='normal'
-                  color={textColor}
-                  fontSize='sm'>
-                  Keep me logged in
-                </FormLabel>
-              </FormControl>
-              <NavLink to='/auth/forgotpassword'>
-                <Text
-                  color={textColorBrand}
-                  fontSize='sm'
-                  w='124px'
-                  fontWeight='500'>
-                  Forgot password?
-                </Text>
-              </NavLink>
-            </Flex>
             <Button
               onClick={onLogin}
               fontSize='sm'
@@ -281,32 +199,13 @@ function SignIn() {
               w='100%'
               h='50'
               mb='24px'>
-              Sign In
+              Submit
             </Button>
           </FormControl>
-          <Flex
-            flexDirection='column'
-            justifyContent='center'
-            alignItems='start'
-            maxW='100%'
-            mt='0px'>
-            <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
-              Not registered yet?
-              <NavLink to='/auth/sign-up'>
-                <Text
-                  color={textColorBrand}
-                  as='span'
-                  ms='5px'
-                  fontWeight='500'>
-                  Create an Account
-                </Text>
-              </NavLink>
-            </Text>
-          </Flex>
         </Flex>
       </Flex>
     </DefaultAuth>
   );
 }
 
-export default SignIn;
+export default ForgotPassword;

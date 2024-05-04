@@ -1,25 +1,22 @@
 // Chakra imports
 import {
   Box, Grid, Text, InputGroup,
-  InputRightElement, FormControl, Flex, Button,
-  FormLabel, useColorModeValue, Input, Icon, Image
+  InputRightElement, Flex, Button,
+  FormLabel, useColorModeValue, Input, Icon
 } from "@chakra-ui/react";
 
 // Custom components
 import Banner from "views/admin/profile/components/Banner";
 
 // Assets
-import banner from "assets/img/auth/banner.png";
-import avatar from "assets/img/avatars/avatar4.png";
 import React, { useState, useEffect} from "react";
-import { useHistory, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 import { request, IMAGE_BASE_URL } from 'axios_helper.js';
 import Swal from 'sweetalert2';
 import Card from "components/card/Card.js";
 export default function Overview() {
-  const history = useHistory();
   const textColor = useColorModeValue("navy.700", "white");
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
@@ -27,8 +24,6 @@ export default function Overview() {
   const handleClickCPassword = () => setShowCPassword(!show);
   const brandStars = useColorModeValue("brand.500", "brand.400");
   const textColorSecondary = "gray.400";
-  const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
-  const [password, setPassword] = useState();
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [idno, setIdNo] = useState();
@@ -42,7 +37,7 @@ export default function Overview() {
   const { id } = useParams();
 
   useEffect(() => {
-    request("GET", "/api/v1/admin/users/" + id, {}
+    request("GET", "/api/v1/public/users/" + id, {}
     ).then((response) => {
       setName(response.data.name);
       setEmail(response.data.email);

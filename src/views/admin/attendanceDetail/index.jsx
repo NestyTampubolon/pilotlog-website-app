@@ -1,14 +1,11 @@
 import {
-    Box, Grid, Badge, SimpleGrid,
+    Box, SimpleGrid,
     Flex,
     Icon,
-    Progress,
     Text,
     Button,
     useColorModeValue,
-    systemProps,
 } from "@chakra-ui/react";
-import Banner from "views/admin/attendanceDetail/components/Banner";
 import { Link } from 'react-router-dom';
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -18,17 +15,13 @@ import ColumnsTable from "views/admin/attendanceDetail/components/ColumnsTable";
 import {
     columnsDataColumns,
 } from "views/admin/attendanceDetail/variables/columnsData";
-import { FaRegHospital } from "react-icons/fa";
 import Card from "components/card/Card.js";
-import IconBox from "components/icons/IconBox";
-import Menu from "components/menu/MainMenu";
 import Swal from 'sweetalert2';
 
 import {
-    MdOutlineCloudDone, MdOutlineDeleteOutline,
+    MdOutlineDeleteOutline,
     MdCheckCircle,
-    MdCreate,
-    MdInsertDriveFile
+    MdCreate
 } from "react-icons/md";
 export default function AttendanceDatail() {
     const [idAttendance, setIdAttendance] = useState();
@@ -303,13 +296,13 @@ export default function AttendanceDatail() {
                                         color='white'
                                         fontSize={{ base: "md", xl: "sm", "3xl": "md" }}
                                         fontWeight='100'>
-                                        End Time
+                                        Confirmation
                                     </Text>
                                 </Button>
                             </Flex>
                         </Flex>
                     )}
-
+{/* 
                     {status === "Done" && (
                         <Flex direction='column' align='center'>
                             <Flex h='100%' align='center'>
@@ -332,7 +325,7 @@ export default function AttendanceDatail() {
                                 </Button>
                             </Flex>
                         </Flex>
-                    )}
+                    )} */}
 
                 </SimpleGrid>
 

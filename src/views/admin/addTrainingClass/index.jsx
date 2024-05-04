@@ -2,37 +2,24 @@ import {
     Box, 
     SimpleGrid, 
     Button, 
-    Link,
-    Checkbox,
     Flex,
     FormControl,
     FormLabel,
-    Heading,
-    Icon,
     Input,
     InputGroup,
-    InputRightElement,
     Text,
     Select,
-    useColorModeValue, Textarea,
+    Textarea,
 } from "@chakra-ui/react";
 import Card from "components/card/Card";
-import React, { useState, useEffect } from "react";
-import { request, getAuthToken } from 'axios_helper.js'
+import React, { useState } from "react";
+import { request } from 'axios_helper.js'
 import { useHistory } from 'react-router-dom';
 export default function AddTrainingClass() {
-    const textColor = useColorModeValue("navy.700", "white");
-    const textColorSecondary = "gray.400";
-    const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
-    const textColorBrand = useColorModeValue("brand.500", "white");
-    const brandStars = useColorModeValue("brand.500", "brand.400");
     const [name, setName] = useState();
     const [short_name, setShortname] = useState();
-    const [trainingType, setTrainingType] = useState("");
     const [recurrent, setRecurrent] = useState("");
     const [description, setDescription] = useState("");
-    const [data, setData] = useState([]);
-    const textColorError = useColorModeValue("red.500", "white");
     const [errors, setErrors] = useState({
         name: "",
         short_name: "",
@@ -55,7 +42,6 @@ export default function AddTrainingClass() {
                 [name]: '',
             }));
         }
-
         switch (name) {
             case 'name':
                 setName(value);

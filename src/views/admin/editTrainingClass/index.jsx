@@ -2,19 +2,14 @@ import {
     Box, 
     SimpleGrid, 
     Button, 
-    Link,
-    Checkbox,
     Flex,
     FormControl,
     FormLabel,
-    Heading,
-    Icon,
     Input,
     InputGroup,
-    InputRightElement,
     Text,
     Select,
-    useColorModeValue, Textarea,
+    Textarea,
 } from "@chakra-ui/react";
 import Card from "components/card/Card";
 import React, { useState, useEffect } from "react";
@@ -26,8 +21,6 @@ export default function EditTrainingClass() {
  
     const [recurrent, setRecurrent] = useState("");
     const [description, setDescription] = useState("");
-
-    const textColorError = useColorModeValue("red.500", "white");
     const [errors, setErrors] = useState({
         name: "",
         short_name: "",

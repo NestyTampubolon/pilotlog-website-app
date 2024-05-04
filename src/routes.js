@@ -20,12 +20,16 @@ import Users from "views/admin/users";
 import NFTMarketplace from "views/admin/marketplace";
 import Profile from "views/admin/profile";
 import DataTables from "views/admin/dataTables";
-import RTL from "views/admin/rtl";
 import Certificate from "views/admin/certificate";
 
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
 import SignUpCentered from "views/auth/signUp";
+import ForgotPassword from "views/auth/forgotPassword";
+import VerifyOtp from "views/auth/verifyOTP";
+import ChangePassword from "views/auth/changePassword";
+
+
 import Attendance from "views/admin/attendance";
 import AttendanceDetail from "views/admin/attendanceDetail";
 import AddAttendance from "views/admin/addAttendance";
@@ -40,12 +44,29 @@ import Settings from "views/admin/settings";
 import Statements from "views/admin/statements";
 import Company from "views/admin/company";
 import Home from "views/home";
+
+import MainSuperadmin from "views/superadmin/default";
+import CompanyDetail from "views/superadmin/companydetail";
 const routes = [
   {
     name: "Home",
     layout: "/home",
     path: "/",
     component: Home,
+  },
+  {
+    name: "Main Superadmin",
+    layout: "/superadmin",
+    path: "/main",
+    icon: <Icon as={MdHome} width='20px' heightattendancedetail='20px' color='inherit' />,
+    component: MainSuperadmin,
+  },
+  {
+    name: "Company Detail",
+    layout: "/superadmin",
+    path: `/companydetail/:id`,
+    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    component: CompanyDetail,
   },
   {
     name: "Sign In",
@@ -60,6 +81,27 @@ const routes = [
     path: "/sign-up",
     icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
     component: SignUpCentered,
+  },
+  {
+    name: "Forgot Password",
+    layout: "/auth",
+    path: "/forgotpassword",
+    icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
+    component: ForgotPassword,
+  },  
+  {
+    name: "Verify OTP",
+    layout: "/auth",
+    path: `/verifyotp/:email`,
+    icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
+    component: VerifyOtp,
+  },
+  {
+    name: "Change Password",
+    layout: "/auth",
+    path: `/changepassword/:email`,
+    icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
+    component: ChangePassword,
   },
   {
     name: "Main",
@@ -204,13 +246,8 @@ const routes = [
     component: Profile,
   },
  
-  {
-    name: "RTL Admin",
-    layout: "/rtl",
-    path: "/rtl-default",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: RTL,
-  },
+
+ 
 ];
 
 export default routes;
