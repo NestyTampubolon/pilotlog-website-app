@@ -29,7 +29,6 @@ export default function Overview() {
   const [idno, setIdNo] = useState();
   const [id_users, setIdUsers] = useState();
   const [profile, setProfile] = useState();
-  const [role, setRole] = useState();
   const [newPassword, setNewPassword] = useState();
   const [confirmationPassword, setConfirmationPassword] = useState();
   
@@ -41,7 +40,6 @@ export default function Overview() {
     ).then((response) => {
       setName(response.data.name);
       setEmail(response.data.email);
-      setRole(response.data.role);
       setIdNo(response.data.id_no);
       setIdUsers(response.data.id_users);
       setProfile(response.data.photo_profile)

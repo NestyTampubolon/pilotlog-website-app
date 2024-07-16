@@ -9,7 +9,7 @@ import {
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
 import { request } from 'axios_helper.js'
-import ExportPDF from "./components/ExportPDF";
+// import ExportPDF from "./components/ExportPDF";
 
 export default function Attendance() {
     const [data, setData] = useState([]);

@@ -7,8 +7,7 @@ import {
   Th,
   Thead,
   Tr,
-  useColorModeValue,
-  Button,
+  useColorModeValue
 } from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import {
@@ -21,7 +20,6 @@ import {
 // Custom components
 import Card from "components/card/Card";
 // Custom components
-import SwitchField from "components/fields/SwitchField";
 import Menu from "components/menu/MainMenu";
 export default function ColumnsTable(props) {
   const { columnsData, tableData } = props;
