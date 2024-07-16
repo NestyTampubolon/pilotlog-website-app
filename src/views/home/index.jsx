@@ -1,40 +1,25 @@
 import React, { useState } from "react";
-import axios from 'axios';
-import { setAuthToken, setUsersInfo } from 'axios_helper.js'
-import { NavLink } from "react-router-dom";
-import Mobile from "assets/img/mobile.svg";
+
 import MobileFeature from "assets/img/mobilefeature.svg";
 import Card from "components/card/Card.js";
 // Chakra imports
 import {
     Box,
     Button,
-    Checkbox,
     Flex,
-    FormControl,
-    FormLabel,
     Heading,
-    Icon,
-    Input,
-    InputGroup,
-    Stack,
     Text,
     useColorModeValue,
     Spacer,
     ButtonGroup,
-    SimpleGrid,
-    Square
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom"
-import { column } from "stylis";
+import { Link } from "react-router-dom";
 
 function Home() {
     // Chakra color mode
     const textColor = useColorModeValue("navy.700", "white");
     const textColorSecondary = "gray.400";
-    const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
     const textColorBrand = useColorModeValue("brand.500", "white");
-    const brandStars = useColorModeValue("brand.500", "brand.400");
     const bg = useColorModeValue("white", "#1B254B");
     const shadow = useColorModeValue(
         "0px 18px 40px rgba(112, 144, 176, 0.4)",
@@ -72,7 +57,7 @@ function Home() {
                         </Box>
 
                         <Box flex='1' style={{ position: 'relative' }} p='40px'>
-                            <img src={Mobile} className="App-logo" alt="logo" width="500" height="550" style={{ position: 'absolute'}} />
+                            <img src={`${process.env.PUBLIC_URL}/mobile.png`} className="App-logo" alt="logo" width="500" height="550" style={{ position: 'absolute'}} />
                         </Box>
                     </Flex>
                 </Box>
