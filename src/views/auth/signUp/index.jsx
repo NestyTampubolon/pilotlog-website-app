@@ -14,6 +14,7 @@ import {
     InputRightElement,
     Text,
     useColorModeValue,
+    Select
 } from "@chakra-ui/react";
 
 import { MdArrowForward, MdArrowBack } from "react-icons/md";
@@ -335,19 +336,47 @@ function SignUp() {
                                     mb='8px'>
                                     HUB<Text color={brandStars}>*</Text>
                                 </FormLabel>
-                                <Input
-                                    name="hub"
-                                    id="hub"
-                                    isRequired={true}
-                                        value={hub}
-                                    onChange={e => setHub(e.target.value)}
-                                    variant='auth'
-                                    fontSize='sm'
-                                    type='text'
-                                    placeholder='123456'
-                                    fontWeight='500'
-                                    size='lg'
-                                />
+                                    <InputGroup size='md'>
+                                        <Select
+                                            name='hub'
+                                            value={hub}
+                                            onChange={e => setHub(e.target.value)}
+                                            isRequired={true}
+                                            fontSize='sm'
+                                            size='lg'
+                                            variant='main'
+                                        >
+                                            <option>CGK</option>
+                                            <option>DPS</option>
+                                            <option>SUB</option>
+                                            <option>UPG</option>
+                                            <option>JOG</option>
+                                            <option>KNO</option>
+                                            <option>BPN</option>
+                                            <option>PLM</option>
+                                            <option>SRG</option>
+                                            <option>PDG</option>
+                                            <option>SOC</option>
+                                            <option>LOP</option>
+                                            <option>PNK</option>
+                                            <option>BTH</option>
+                                            <option>MDC</option>
+                                            <option>BDO</option>
+                                            <option>PKU</option>
+                                            <option>BPN</option>
+                                            <option>BKS</option>
+                                            <option>DTB</option>
+                                            <option>BIK</option>
+                                            <option>LOP</option>
+                                            <option>TJQ</option>
+                                            <option>SOC</option>
+                                            <option>KOE</option>
+                                            <option>DJJ</option>
+                                            <option>BIK</option>
+                                            <option>BTJ</option>
+                                            <option>DJB</option>
+                                        </Select>
+                                    </InputGroup>
                                     {errors.hub && <Text fontWeight='500' ms='10px' fontSize='sm' color='red.500'>{errors.hub}</Text>}
                             </Box>
                             <Box flex='1' ml='12px'>
@@ -490,6 +519,7 @@ function SignUp() {
                                     </InputGroup>
                                     {errors.ccontact && <Text fontWeight='500' ms='10px' fontSize='sm' color='red.500'>{errors.ccontact}</Text>}
                                 </Box>
+                                <Box></Box>
                             </Flex>
                             <Flex justifyContent='space-between'>
                                 <Button

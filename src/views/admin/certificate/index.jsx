@@ -26,7 +26,7 @@ import ImageCrop from 'react-easy-crop';
 import Card from "components/card/Card";
 import { MdAdd } from "react-icons/md";
 import { SketchPicker } from 'react-color';
-import Avatar1 from "assets/img/avatars/avatar1.png";
+import Avatar1 from "assets/img/avatars/avatar.png";
 import { request, IMAGE_BASE_URL } from 'axios_helper.js';
 import Swal from 'sweetalert2';
 import {
@@ -35,7 +35,7 @@ import {
 
 function CertificatePreview({ templateSettings }) {
     const { croppedImage, name, date, training, logo, company, signature, CPTS} = templateSettings;
-    const originalWidth = 25; // dalam cm
+    const originalWidth = 28; // dalam cm
     const originalHeight = 21; // dalam cm
     const desiredWidth = 9.9; // dalam cm, setengah dari originalWidth
 
@@ -127,7 +127,6 @@ export default function Certificate() {
             croppedImage: certificate ? IMAGE_BASE_URL + "background/" + certificate.backgroundImage : prevSettings.croppedImage,
             name: {
                 ...prevSettings.name,
-                text: certificate ? certificate.nameText : prevSettings.name.text,
                 color: certificate ? certificate.nameColor : prevSettings.name.color,
                 fontSize: certificate ? certificate.nameFontSize : prevSettings.name.fontSize,
                 positionX: certificate ? certificate.namePositionX : prevSettings.name.positionX,
@@ -138,7 +137,6 @@ export default function Certificate() {
             },
             date: {
                 ...prevSettings.date,
-                text: certificate ? certificate.dateText : prevSettings.date.text,
                 color: certificate ? certificate.dateColor : prevSettings.date.color,
                 fontSize: certificate ? certificate.dateFontSize : prevSettings.date.fontSize,
                 positionX: certificate ? certificate.datePositionX : prevSettings.date.positionX,
@@ -149,7 +147,6 @@ export default function Certificate() {
             },
             training: {
                 ...prevSettings.training,
-                text: certificate ? certificate.trainingText : prevSettings.training.text,
                 color: certificate ? certificate.trainingColor : prevSettings.training.color,
                 fontSize: certificate ? certificate.trainingFontSize : prevSettings.training.fontSize,
                 positionX: certificate ? certificate.trainingPositionX : prevSettings.training.positionX,
@@ -160,7 +157,6 @@ export default function Certificate() {
             },
             company: {
                 ...prevSettings.company,
-                text: certificate ? certificate.companyText : prevSettings.company.text,
                 color: certificate ? certificate.companyColor : prevSettings.company.color,
                 fontSize: certificate ? certificate.companyFontSize : prevSettings.company.fontSize,
                 positionX: certificate ? certificate.companyPositionX : prevSettings.company.positionX,
@@ -187,7 +183,6 @@ export default function Certificate() {
             },
             CPTS: {
                 ...prevSettings.CPTS,
-                text: certificate ? certificate.idcpts.name : prevSettings.CPTS.text,
                 color: certificate ? certificate.cptsColor : prevSettings.CPTS.color,
                 width: certificate ? certificate.cptsWidth : prevSettings.CPTS.width,
                 height: certificate ? certificate.cptsHeight : prevSettings.CPTS.height,
@@ -207,7 +202,7 @@ export default function Certificate() {
             text: certificate ? certificate.nameText : 'John Doe',
             color: '#000000',
             fontSize: 24,
-            positionX: 350,
+            positionX: 300,
             positionY: 200,
             width: 400,
             height: 20,
@@ -228,7 +223,7 @@ export default function Certificate() {
             color: '#000000',
             fontSize: 20,
             positionX: 300,
-            positionY: 350,
+            positionY: 200,
             width: 400,
             height: 40,
             textAlign: 'center'
@@ -237,8 +232,8 @@ export default function Certificate() {
             text: 'PT Indonesia AirAsia',
             color: '#000000',
             fontSize: 22,
-            positionX: 850,
-            positionY: 750,
+            positionX: 700,
+            positionY: 700,
             width: 200,
             height: 20,
             textAlign: 'center'
@@ -262,9 +257,9 @@ export default function Certificate() {
             text: '',
             color: '#000000',
             fontSize: 20,
-            positionX: 200,
-            positionY: 600,
-            width: 200,
+            positionX: 100,
+            positionY: 700,
+            width: 300,
             height: 20,
             textAlign: 'center'
         },

@@ -17,6 +17,7 @@ import Card from "components/card/Card";
 import React, { useState, useEffect } from "react";
 import { request } from 'axios_helper.js'
 import { useHistory } from 'react-router-dom';
+import Swal from 'sweetalert2';
 export default function AddUsers() {
     const [name, setName] = useState();
     const [email, setEmail] = useState();
@@ -25,6 +26,7 @@ export default function AddUsers() {
     const [rank, setRank] = useState('CAPT');
     const [hub, setHub] = useState('CGK');
     const [role, setRole] = useState();
+    const [loading, setLoading] = useState(false);
     const [checkboxes, setCheckboxes] = useState({
         admin: false,
         cpts: false,
@@ -138,7 +140,7 @@ export default function AddUsers() {
 
         event.preventDefault();
 
-
+        console.log(license);
         if (!name || !email || !idno || !hub || !role) {
             setErrors((prevErrors) => ({
                 name: !name ? 'Name is required' : prevErrors.name,
@@ -155,9 +157,14 @@ export default function AddUsers() {
             }
             return;
         }else{
+            setLoading(true);
             request("POST", "/api/v1/admin/addUsers", {name, email, id_no: idno, license_no : license, rank, hub, role}
             ).then((response) => {
-                history.push("/admin/users");
+                if (response.status === 200 || response.status === 201){
+                    setLoading(false);
+                      history.push("/admin/users");
+                }
+                setLoading(false);
             });
         }
         
@@ -165,6 +172,27 @@ export default function AddUsers() {
         // handle API call here
         console.log('Form submitted:', { name, email, idno, license, rank, hub, role });
     };
+
+
+    useEffect(() => {
+        // Tampilkan swal saat loading aktif
+        if (loading) {
+            Swal.fire({
+                title: "Loading...",
+                html: "Please wait...",
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                onBeforeOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        } else {
+            // Tutup swal jika loading telah selesai
+            Swal.close();
+        }
+    }, [loading]);
 
     return (
         <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
@@ -276,6 +304,33 @@ export default function AddUsers() {
                             >
                                 <option>CGK</option>
                                 <option>DPS</option>
+                                <option>SUB</option>
+                                <option>UPG</option>
+                                <option>JOG</option>
+                                <option>KNO</option>
+                                <option>BPN</option>
+                                <option>PLM</option>
+                                <option>SRG</option>
+                                <option>PDG</option>
+                                <option>SOC</option>
+                                <option>LOP</option>
+                                <option>PNK</option>
+                                <option>BTH</option>
+                                <option>MDC</option>
+                                <option>BDO</option>
+                                <option>PKU</option>
+                                <option>BPN</option>
+                                <option>BKS</option>
+                                <option>DTB</option>
+                                <option>BIK</option>
+                                <option>LOP</option>
+                                <option>TJQ</option>
+                                <option>SOC</option>
+                                <option>KOE</option>
+                                <option>DJJ</option>
+                                <option>BIK</option>
+                                <option>BTJ</option>
+                                <option>DJB</option>
                             </Select>
                         </InputGroup>
                         {errors.hub && <Text fontWeight='500' ms='10px' fontSize='sm' color='red.500'>{errors.hub}</Text>}

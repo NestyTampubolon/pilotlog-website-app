@@ -18,12 +18,14 @@ import { Link } from 'react-router-dom';
 // Custom components
 import SwitchField from "components/fields/SwitchField";
 import Menu from "components/menu/MainMenu";
+import Swal from "sweetalert2";
 import {
   useGlobalFilter,
   usePagination,
   useSortBy,
   useTable,
 } from "react-table";
+import { request } from 'axios_helper.js';
 export default function ColumnsTable(props) {
   
   const { columnsData, tableData } = props;
@@ -58,6 +60,33 @@ export default function ColumnsTable(props) {
   initialState.pageSize = 10;
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
+
+  const activationUsers = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Are you sure to active / inactive this class?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        request("PUT", `/api/v1/admin/activationusers/${id}`, {})
+          .then((response) => {
+            Swal.fire({
+              title: "Success!",
+              text: "Your status users has been change.",
+              icon: "success"
+            });
+            window.location.reload();
+
+          })
+          .catch((err) => console.log(err));
+      }
+    });
+  };
+  
   return (
     <Card
       direction='column'
@@ -145,14 +174,16 @@ export default function ColumnsTable(props) {
                     );
                   } else if (cell.column.Header === "ACCOUNT") {
                     data = (
-                      <SwitchField
-                        isChecked={cell.value === 1}
-                        reversed={true}
-                        fontSize="sm"
-                        mb="20px"
-                        id="1"
-                        label=""
-                      />
+                      <Flex align='center'>
+                        {cell.value == 1 &&
+                          <Button variant='brand' onClick={() => activationUsers(cell.row.original.id_users)}>Active</Button>
+                        }
+
+                        {cell.value == 0 &&
+                          <Button variant='lightBrand' onClick={() => activationUsers(cell.row.original.id_users)}>Inactive</Button>
+                        }
+
+                      </Flex>
                     );
                   } else if (cell.column.Header === "STATUS") {
                     data = (

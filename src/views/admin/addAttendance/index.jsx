@@ -19,6 +19,7 @@ import {
     MdOutlineAdd
 } from "react-icons/md";
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export default function AddAttendance() {
     const [subject, setSubject] = useState();
@@ -34,6 +35,7 @@ export default function AddAttendance() {
     const [dataVenue, setDataVenue] = useState([]);
     const [dataRoom, setDataRoom] = useState([]);
     const [dataInstructor, setDataInstructor] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({
         subject: "",
         department: "",
@@ -106,9 +108,14 @@ export default function AddAttendance() {
             }));
             return;
         } else {
+            setLoading(true);
             request("POST", "/api/v1/admin/addAttendance", { id_trainingclass: subject, department, date, venue, room, id_instructor: instructor, start_time, end_time }
             ).then((response) => {
-                history.push("/admin/attendance");
+                console.log(response.status);
+                if (response.status === 200 || response.status === 201){
+                    setLoading(false);
+                    history.push("/admin/attendance");
+                }
             }).catch((error) => {
                 // Jika terjadi kesalahan, tampilkan pesan error
                 console.log("Error:", error);
@@ -186,6 +193,27 @@ export default function AddAttendance() {
             setRoom(dataRoom[0].name);
         }
     }, [dataRoom]);
+
+
+    useEffect(() => {
+        // Tampilkan swal saat loading aktif
+        if (loading) {
+            Swal.fire({
+                title: "Loading...",
+                html: "Please wait...",
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                onBeforeOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        } else {
+            // Tutup swal jika loading telah selesai
+            Swal.close();
+        }
+    }, [loading]);
 
 
     return (

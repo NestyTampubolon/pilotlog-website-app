@@ -161,7 +161,7 @@ export default function ColumnsTable(props) {
                     );
                   } else if (cell.column.Header === "ACTION") {
                     data = (
-                      <Link href={`#/superadmin/companydetail/${cell.value}`}>
+                      <Link href={`companydetail/${cell.value}`}>
                         <Button variant='outline'>View Detail</Button>
                       </Link>
                     );

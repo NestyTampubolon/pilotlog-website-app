@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://192.168.164.154:8080';
+axios.defaults.baseURL = 'https://pilotlog-backend-production.up.railway.app';
+// axios.defaults.baseURL = 'http://pilotlog-env-1.eba-nppu2nfv.ap-southeast-2.elasticbeanstalk.com';
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 export const IMAGE_BASE_URL = `${axios.defaults.baseURL}/api/v1/images/`;

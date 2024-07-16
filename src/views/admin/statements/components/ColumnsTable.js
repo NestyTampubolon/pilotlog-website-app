@@ -78,7 +78,7 @@ function ColumnsTable({ columnsData, tableData }) {
   const activationTraining = (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "Are you sure to deactivate this class?",
+      text: "Are you sure to deactivate / active this class?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -89,8 +89,8 @@ function ColumnsTable({ columnsData, tableData }) {
         request("PUT", `/api/v1/admin/statements/activation/${id}`, {})
           .then((response) => {
             Swal.fire({
-              title: "Deleted!",
-              text: "Your statement has been deleted.",
+              title: "Success!",
+              text: "Your status statement has been change.",
               icon: "success"
             });
             window.location.reload();
@@ -156,22 +156,22 @@ function ColumnsTable({ columnsData, tableData }) {
                     data = (
                       <Flex align="center">
                         <Text color={textColor} fontSize="sm" fontWeight="700">
-                          {cell.value}
+                          {cell.value == "forTrainee" ? "Trainee" : "Instructor" }
                         </Text>
                       </Flex>
                     );
                   } else if (cell.column.Header === "ACTIVE") {
                     data = (
-                      <SwitchField
-                        onClick={() => activationTraining(cell.row.original.action)}
-                        isChecked={cell.value === 1}
-                        isReadOnly={true}
-                        reversed={true}
-                        fontSize="sm"
-                        mb="20px"
-                        id="1"
-                        label=""
-                      />
+                      <Flex align='center'>
+                        {cell.value == 1 &&
+                          <Button variant='brand' onClick={() => activationTraining(cell.row.original.action)}>Enable</Button>
+                        }
+
+                        {cell.value == 0 &&
+                          <Button variant='lightBrand' onClick={() => activationTraining(cell.row.original.action)}>Disable</Button>
+                        }
+
+                      </Flex>
                     );
                   } else if (cell.column.Header === "ACTION") {
                     data = (

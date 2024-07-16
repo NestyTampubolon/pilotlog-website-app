@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'assets/css/App.css';
-import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import AuthLayout from 'layouts/auth';
 import AdminLayout from 'layouts/admin';
 import HomeLayout from 'layouts/home';
@@ -16,7 +16,7 @@ ReactDOM.render(
 	<ChakraProvider theme={theme}>
 		<React.StrictMode>
 			<ThemeEditorProvider>
-				<HashRouter>
+				<Router>
 					<Switch>
 						<PrivateRoute path="/admin" component={AdminLayout} />
 						<PrivateRoute path="/test" component={AdminLayout} />
@@ -24,10 +24,9 @@ ReactDOM.render(
 						<PrivateRoute path="/superadmin" component={SuperadminLayout} />
 						<Route path="/auth" component={AuthLayout} />
 						<Route path="/home" component={HomeLayout} />
-						{/* <Redirect from="/" to="/auth/sign-in" /> */}
 						<Redirect from="/" to="/home/" />
 					</Switch>
-				</HashRouter>
+				</Router>
 			</ThemeEditorProvider>
 		</React.StrictMode>
 	</ChakraProvider>,

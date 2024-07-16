@@ -35,7 +35,7 @@ export default function Marketplace() {
               name: item.name,
               email: item.email,
               contact: item.contact,
-              isactive: item.is_active,
+              isactive: item._active,
               action:item.id_company
             }))}
           />

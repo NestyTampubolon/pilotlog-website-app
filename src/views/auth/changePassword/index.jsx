@@ -26,6 +26,7 @@ import Swal from 'sweetalert2';
 
 function ChangePassword() {
   // Chakra color mode
+  const history = useHistory();
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
   const brandStars = useColorModeValue("brand.500", "brand.400");
@@ -58,7 +59,15 @@ function ChangePassword() {
       axios.post(`/api/v1/auth/changePassword/${email}`, { password: password, repeatPassword: repeatPassword})
         .then((response) => {
           console.log(response.status);
-
+          if (response.status === 200) {
+            Swal.fire({
+              icon: "success",
+              title: response.data,
+              showConfirmButton: false,
+              timer: 1500
+            });
+            history.push("/home/")
+          }
 
         }).catch((error) => {
           setLoading(false);

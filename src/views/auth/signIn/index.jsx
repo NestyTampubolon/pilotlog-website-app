@@ -62,30 +62,31 @@ function SignIn() {
           console.log(response.data.users);
           setAuthToken(response.data.token);
           setUsersInfo(response.data.users);
-          if(response.data.users.id_company.is_active === 0){
-            Swal.fire({
-              title: "Act",
-              text: "That thing is still around?",
-              icon: "question"
-            });
-          }else{
-            if (response.data.users.role === 'ADMIN') {
+          if (response.data.users.role === 'ADMIN') {
             request("GET", "/api/v1/public/validationallpilot", {}
-            ).then((response) => {
-              setLoading(false);
-              history.push("/admin/default");
+            ).then((responses) => {
+              if (response.data.users.id_company.is_active === 0) {
+                Swal.fire({
+                  title: "Activation Account",
+                  text: "Waiting For Confirmation",
+                  icon: "question"
+                });
+              } else {
+                setLoading(false);
+                history.push("/admin/default");
+              }
+
             });
           } else if (response.data.users.role === 'SUPERADMIN') {
             console.log("test");
             setLoading(false);
             history.push("/superadmin/main");
-          }else{
+          } else {
             Swal.fire({
               icon: "error",
               title: "Oops...",
               text: "Invalid Email or Password"
             });
-          }
           }
           
 

@@ -23,7 +23,7 @@ export default function Users() {
 
     return(
         <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-            <Link href={`#/admin/addusers`}>
+            <Link href={`addusers`}>
                 <Button
                     variant='darkBrand'
                     color='white'

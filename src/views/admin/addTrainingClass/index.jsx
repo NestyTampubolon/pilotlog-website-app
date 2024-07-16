@@ -12,14 +12,16 @@ import {
     Textarea,
 } from "@chakra-ui/react";
 import Card from "components/card/Card";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { request } from 'axios_helper.js'
 import { useHistory } from 'react-router-dom';
+import Swal from 'sweetalert2';
 export default function AddTrainingClass() {
     const [name, setName] = useState();
     const [short_name, setShortname] = useState();
     const [recurrent, setRecurrent] = useState("");
     const [description, setDescription] = useState("");
+    const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({
         name: "",
         short_name: "",
@@ -62,7 +64,9 @@ export default function AddTrainingClass() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
+       
+     
+        
         if (!name || !short_name || !recurrent || !description) {
             setErrors((prevErrors) => ({
                 name: !name ? 'Subject is required' : prevErrors.name,
@@ -71,17 +75,42 @@ export default function AddTrainingClass() {
                 description: !description ? 'Description is required' : prevErrors.description,
             }));
             return;
-        }else{
-            request("POST", "/api/v1/admin/addTraining", {name, short_name, recurrent, description}
+        } else {
+            setLoading(true);
+            request("POST", "/api/v1/admin/addTraining", { name, short_name, recurrent, description }
             ).then((response) => {
-                history.push("/admin/trainingclass");
+                console.log(response.status);
+                if (response.status === 200 || response.status === 201) {
+                    setLoading(false);
+                    history.push("/admin/trainingclass");
+                } else {
+                    setLoading(false);
+                }
             });
         }
-        
-
         // handle API call here
         console.log('Form submitted:', { name, short_name, recurrent, description });
     };
+
+    useEffect(() => {
+        // Tampilkan swal saat loading aktif
+        if (loading) {
+            Swal.fire({
+                title: "Loading...",
+                html: "Please wait...",
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                onBeforeOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        } else {
+            // Tutup swal jika loading telah selesai
+            Swal.close();
+        }
+    }, [loading]);
 
 
     return (
@@ -124,7 +153,7 @@ export default function AddTrainingClass() {
                                 variant='main'
                             />
                         </InputGroup>
-                        {errors.shortname && <Text fontWeight='500' ms='10px' fontSize='sm' color='red.500'>{errors.shortname}</Text>}
+                        {errors.short_name && <Text fontWeight='500' ms='10px' fontSize='sm' color='red.500'>{errors.short_name}</Text>}
                     </FormControl>
                     <FormControl>
                         <FormLabel ms='4px' fontSize='sm' fontWeight='500' display='flex'>

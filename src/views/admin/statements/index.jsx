@@ -6,10 +6,12 @@ import {
 import React, { useState, useEffect } from "react";
 import { request } from 'axios_helper.js'
 import Card from "components/card/Card";
+import Swal from 'sweetalert2';
 
 import { useHistory } from 'react-router-dom';
 export default function Statements() {
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false);
     
 
     useEffect(() => {
@@ -69,9 +71,11 @@ export default function Statements() {
             }));
             return;
         } else {
+            setLoading(true);
             request("POST", "/api/v1/admin/addStatements", { content, statementType }
             ).then((response) => {
                 window.location.reload();
+                setLoading(false);
             }).catch((error) => {
                 // Jika terjadi kesalahan, tampilkan pesan error
                 console.log("Error:", error);
@@ -82,6 +86,26 @@ export default function Statements() {
         console.log('Form submitted:', {  content, statementType});
     };
 
+
+    useEffect(() => {
+        // Tampilkan swal saat loading aktif
+        if (loading) {
+            Swal.fire({
+                title: "Loading...",
+                html: "Please wait...",
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                onBeforeOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        } else {
+            // Tutup swal jika loading telah selesai
+            Swal.close();
+        }
+    }, [loading]);
 
     return(
         <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>

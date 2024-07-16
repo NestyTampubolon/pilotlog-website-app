@@ -11,7 +11,8 @@ import {
   MdLibraryBooks,
   MdAssignmentReturn,
   MdOutlineQuestionMark,
-  MdBusiness
+  MdBusiness,
+  MdEditDocument
 } from "react-icons/md";
 
 // Admin Imports
@@ -146,7 +147,7 @@ const routes = [
     component: Attendance,
   },
   {
-    name: "Training Class",
+    name: "Training",
     layout: "/admin",
     path: "/trainingclass",
     icon: <Icon as={MdAssignmentReturn} width='20px' height='20px' color='inherit' />,
@@ -199,7 +200,7 @@ const routes = [
     name: "Certificate",
     layout: "/admin",
     path: "/certificate",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={MdEditDocument} width='20px' height='20px' color='inherit' />,
     component: Certificate,
   },
   {

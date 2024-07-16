@@ -24,7 +24,7 @@ export default function TrainingClass() {
 
     return (
         <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-            <Link href={`#/admin/addtrainingclass`}>
+            <Link href={`addtrainingclass`}>
                 <Button
                     variant='darkBrand'
                     color='white'
@@ -52,7 +52,7 @@ export default function TrainingClass() {
                             color='white'
                             fontWeight='bold'
                             me='14px'>
-                            Add TrainingClass
+                            Add Training
                         </Text>
                     </Flex>
                 </Button>

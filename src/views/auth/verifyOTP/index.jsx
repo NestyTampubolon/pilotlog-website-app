@@ -34,7 +34,10 @@ function VerifyOtp() {
     setLoading(true);
     axios.post('/api/v1/auth/verifyMail/' + email,)
       .then((response) => {
-        if (response.status === 200) {
+        console.log(response.status);
+  
+        if(response.status === 200) {
+          setLoading(false);
           Swal.fire({
             icon: "success",
             title: response.data,

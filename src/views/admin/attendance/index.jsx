@@ -89,7 +89,7 @@ export default function Attendance() {
                     </Flex>
                 </Button>
             </Link>
-            <ExportPDF/>
+            {/* <ExportPDF/> */}
 
             <SimpleGrid
                 mb='20px'
