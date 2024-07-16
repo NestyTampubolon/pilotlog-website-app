@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-
-import MobileFeature from "assets/img/mobilefeature.svg";
 import Card from "components/card/Card.js";
 // Chakra imports
 import {
@@ -57,7 +55,7 @@ function Home() {
                         </Box>
 
                         <Box flex='1' style={{ position: 'relative' }} p='40px'>
-                            <img src={`/mobile.png`} className="App-logo" alt="logo" width="500" height="550" style={{ position: 'absolute'}} />
+                            <img src={'/mobile.png'} className="App-logo" alt="logo" width="500" height="550" style={{ position: 'absolute'}} />
                         </Box>
                     </Flex>
                 </Box>
@@ -140,7 +138,7 @@ function Home() {
                         </Box>
 
                         <Box flex='1' style={{ position: 'relative' }} p='40px'>
-                            <img src={MobileFeature} className="App-logo" alt="logo" width="400" height="450" style={{ position: 'absolute' }} />
+                            <img src={'/mobilefeature.svg'} className="App-logo" alt="logo" width="400" height="450" style={{ position: 'absolute' }} />
                         </Box>
                     </Flex>
                 </Box>
