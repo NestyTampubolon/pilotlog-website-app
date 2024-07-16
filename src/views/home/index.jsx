@@ -57,7 +57,7 @@ function Home() {
                         </Box>
 
                         <Box flex='1' style={{ position: 'relative' }} p='40px'>
-                            <img src={`${process.env.PUBLIC_URL}/mobile.png`} className="App-logo" alt="logo" width="500" height="550" style={{ position: 'absolute'}} />
+                            <img src={`/mobile.png`} className="App-logo" alt="logo" width="500" height="550" style={{ position: 'absolute'}} />
                         </Box>
                     </Flex>
                 </Box>
